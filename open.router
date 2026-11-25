@@ -1,0 +1,22 @@
+from openai import OpenAI
+from google.colab import userdata
+
+API_KEY = userdata.get('OPEN_ROUTER')
+client = OpenAI( base_url="https://openrouter.ai/api/v1",
+  api_key=API_KEY,)
+
+response = client.responses.create(
+  model="openai/gpt-4o-mini:free",
+  instructions="""Você é um mentor de carreiras.
+Liste profissões que o usuário pode fazer uma graduação que tem correlação.
+Regras:
+1. Liste profissões reais no Brasil
+2. Seja breve.
+3. Não use emojis.""",
+  input="Eu gosto de nadar, jogar bola e viajar"
+)
+
+
+print(f'Tokens de entrada: {response.usage.input_tokens}')
+print(f'Tokens de saída: {response.usage.output_tokens}')
+print(f'Total de tokens: {response.usage.total_tokens}')
